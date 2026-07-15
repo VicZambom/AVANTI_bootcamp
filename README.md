@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🏟️ Sistema de Agendamento de Quadras Esportivas
 
 Aplicação web para cadastro de jogadores e quadras, reserva de horários e
