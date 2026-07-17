@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Modalidade {
+  FUTEBOL
+  FUTSAL
+  VOLEI
+  BASQUETE
+  TENIS
+  HANDEBOL
+  OUTRO
+}
+
+enum StatusReserva {
+  ATIVA
+  CANCELADA
+}
+
+model Jogador {
+  id       Int       @id @default(autoincrement())
+  nome     String
+  email    String    @unique
+  telefone String
+  reservas Reserva[]
+  criadoEm DateTime  @default(now())
+}
+
+model Quadra {
+  id          Int        @id @default(autoincrement())
+  nome        String
+  modalidade  Modalidade
+  localizacao String
+  reservas    Reserva[]
+  criadoEm    DateTime   @default(now())
+}
+
+model Reserva {
+  id           Int           @id @default(autoincrement())
+  inicio       DateTime
+  fim          DateTime
+  status       StatusReserva @default(ATIVA)
+  observacao   String?
+  jogador      Jogador       @relation(fields: [jogadorId], references: [id], onDelete: Restrict)
+  jogadorId    Int
+  quadra       Quadra        @relation(fields: [quadraId], references: [id], onDelete: Restrict)
+  quadraId     Int
+  criadoEm     DateTime      @default(now())
+  atualizadoEm DateTime      @updatedAt
+
+  @@index([quadraId, inicio, fim])
+}
