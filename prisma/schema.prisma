@@ -8,6 +8,41 @@ datasource db {
   
 }
 
+model Jogador {
+  id       Int       @id @default(autoincrement())
+  nome     String
+  email    String    @unique
+  telefone String
+  criadoEm DateTime  @default(now())
+  reservas Reserva[]
+}
+
+model Quadra {
+  id          Int        @id @default(autoincrement())
+  nome        String
+  modalidade  Modalidade
+  localizacao String
+  criadoEm    DateTime   @default(now())
+  reservas    Reserva[]
+}
+
+model Reserva {
+  id           Int           @id @default(autoincrement())
+  inicio       DateTime
+  fim          DateTime
+  status       StatusReserva @default(ATIVA)
+  observacao   String?
+  jogadorId    Int
+  quadraId     Int
+  criadoEm     DateTime      @default(now())
+  atualizadoEm DateTime      @updatedAt
+
+  jogador Jogador @relation(fields: [jogadorId], references: [id], onDelete: Restrict)
+  quadra  Quadra  @relation(fields: [quadraId], references: [id], onDelete: Restrict)
+
+  @@index([quadraId, inicio, fim])
+}
+
 enum Modalidade {
   FUTEBOL
   FUTSAL
@@ -21,38 +56,4 @@ enum Modalidade {
 enum StatusReserva {
   ATIVA
   CANCELADA
-}
-
-model Jogador {
-  id       Int       @id @default(autoincrement())
-  nome     String
-  email    String    @unique
-  telefone String
-  reservas Reserva[]
-  criadoEm DateTime  @default(now())
-}
-
-model Quadra {
-  id          Int        @id @default(autoincrement())
-  nome        String
-  modalidade  Modalidade
-  localizacao String
-  reservas    Reserva[]
-  criadoEm    DateTime   @default(now())
-}
-
-model Reserva {
-  id           Int           @id @default(autoincrement())
-  inicio       DateTime
-  fim          DateTime
-  status       StatusReserva @default(ATIVA)
-  observacao   String?
-  jogador      Jogador       @relation(fields: [jogadorId], references: [id], onDelete: Restrict)
-  jogadorId    Int
-  quadra       Quadra        @relation(fields: [quadraId], references: [id], onDelete: Restrict)
-  quadraId     Int
-  criadoEm     DateTime      @default(now())
-  atualizadoEm DateTime      @updatedAt
-
-  @@index([quadraId, inicio, fim])
 }
