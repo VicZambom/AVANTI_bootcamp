@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
     console.error("Erro ao buscar quadras:", error);
 
     return res.status(500).json({
-      message: "Erro interno ao buscar as quadras.",
+      mensagem: "Erro interno ao buscar as quadras.",
     });
   }
 });
@@ -31,7 +31,7 @@ router.get("/:id", async (req, res) => {
 
     if (!quadra) {
       return res.status(404).json({
-        message: "Quadra não encontrada.",
+        mensagem: "Quadra não encontrada.",
       });
     }
 
@@ -40,7 +40,7 @@ router.get("/:id", async (req, res) => {
     console.error("Erro ao buscar quadra:", error);
 
     return res.status(500).json({
-      message: "Erro interno ao buscar a quadra.",
+      mensagem: "Erro interno ao buscar a quadra.",
     });
   }
 });
@@ -62,13 +62,13 @@ router.post("/", async (req, res) => {
 
     if (!nome || !modalidade || !localizacao) {
       return res.status(400).json({
-        message: "Nome, modalidade e localização são obrigatórios.",
+        mensagem: "Nome, modalidade e localização são obrigatórios.",
       });
     }
 
     if (!modalidadesValidas.includes(modalidade)) {
       return res.status(400).json({
-        message: "Modalidade inválida.",
+        mensagem: "Modalidade inválida.",
         modalidadesValidas,
       });
     }
@@ -86,7 +86,7 @@ router.post("/", async (req, res) => {
     console.error("Erro ao cadastrar quadra:", error);
 
     return res.status(500).json({
-      message: "Erro interno ao cadastrar a quadra.",
+      mensagem: "Erro interno ao cadastrar a quadra.",
     });
   }
 });
@@ -110,19 +110,19 @@ router.put("/:id", async (req, res) => {
 
     if (Number.isNaN(id)) {
       return res.status(400).json({
-        message: "ID inválido.",
+        mensagem: "ID inválido.",
       });
     }
 
     if (!nome || !modalidade || !localizacao) {
       return res.status(400).json({
-        message: "Nome, modalidade e localização são obrigatórios.",
+        mensagem: "Nome, modalidade e localização são obrigatórios.",
       });
     }
 
     if (!modalidadesValidas.includes(modalidade)) {
       return res.status(400).json({
-        message: "Modalidade inválida.",
+        mensagem: "Modalidade inválida.",
         modalidadesValidas,
       });
     }
@@ -135,7 +135,7 @@ router.put("/:id", async (req, res) => {
 
     if (!quadraExistente) {
       return res.status(404).json({
-        message: "Quadra não encontrada.",
+        mensagem: "Quadra não encontrada.",
       });
     }
 
@@ -155,7 +155,7 @@ router.put("/:id", async (req, res) => {
     console.error("Erro ao atualizar quadra:", error);
 
     return res.status(500).json({
-      message: "Erro interno ao atualizar a quadra.",
+      mensagem: "Erro interno ao atualizar a quadra.",
     });
   }
 });
@@ -167,7 +167,7 @@ router.delete("/:id", async (req, res) => {
 
     if (Number.isNaN(id)) {
       return res.status(400).json({
-        message: "ID inválido.",
+        mensagem: "ID inválido.",
       });
     }
 
@@ -179,7 +179,7 @@ router.delete("/:id", async (req, res) => {
 
     if (!quadraExistente) {
       return res.status(404).json({
-        message: "Quadra não encontrada.",
+        mensagem: "Quadra não encontrada.",
       });
     }
 
@@ -190,14 +190,16 @@ router.delete("/:id", async (req, res) => {
     });
 
     return res.status(200).json({
-      message: "Quadra excluída com sucesso.",
+      mensagem: "Quadra excluída com sucesso.",
     });
   } catch (error) {
+    if (error.code === "P2003") {
+      return res.status(409).json({
+        mensagem: "Não é possível excluir: esta quadra possui reservas.",
+      });
+    }
     console.error("Erro ao excluir quadra:", error);
-
-    return res.status(500).json({
-      message: "Erro interno ao excluir a quadra.",
-    });
+    return res.status(500).json({ mensagem: "Erro interno ao excluir a quadra." });
   }
 });
 

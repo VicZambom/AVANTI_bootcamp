@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🏟️ Sistema de Agendamento de Quadras Esportivas
 
 Aplicação web para cadastro de jogadores e quadras, reserva de horários e
@@ -10,14 +9,21 @@ Projeto do bootcamp **Desenvolvimento Full Stack - 2026.2 (Atlântico Avanti)**.
 
 Substituir a reserva desorganizada (cadernos, grupos de mensagem, ordem de
 chegada) por um sistema que gerencia jogadores, quadras e reservas, impedindo
-sobreposição de horários.
+sobreposição de horários na mesma quadra.
 
 ## 🛠️ Tecnologias
 
 - **Node.js + Express** — servidor e rotas da API
 - **Prisma ORM** — acesso ao banco de dados
-- **PostgreSQL** — banco de dados relacional
-- **ReactJS** — interface (frontend)
+- **PostgreSQL** — banco de dados relacional (hospedado no Neon)
+- **ReactJS** — interface (frontend, em desenvolvimento)
+
+## ✅ Funcionalidades do backend
+
+- CRUD de **Jogadores** (criar, listar, buscar, atualizar, remover)
+- CRUD de **Quadras** (criar, listar, buscar, atualizar, remover)
+- CRUD de **Reservas** com **validação de conflito de horário**:
+  não permite duas reservas sobrepostas na mesma quadra.
 
 ## 🚀 Como executar (backend)
 
@@ -26,12 +32,26 @@ sobreposição de horários.
 ```bash
    npm install
 ```
-3. Crie um arquivo `.env` na raiz (use o `.env.example` como base).
-4. Inicie o servidor em modo desenvolvimento:
+3. Crie um arquivo `.env` na raiz (use o `.env.example` como base) com a sua
+   conexão do PostgreSQL:
+```bash
+   DATABASE_URL="postgresql://usuario:senha@host:5432/banco?sslmode=require"
+```
+4. Gere o cliente do Prisma e crie as tabelas:
+```bash
+   npx prisma generate
+   npx prisma migrate dev
+```
+5. Inicie o servidor em modo desenvolvimento:
 ```bash
    npm run dev
 ```
-5. A API sobe em `http://localhost:3000`.
+6. A API sobe em `http://localhost:3000`.
 
-> ⚠️ As etapas de banco de dados (Prisma + PostgreSQL) serão adicionadas aqui
-> conforme o projeto avança.
+## 📍 Rotas principais
+
+| Recurso   | Método | Rota              |
+|-----------|--------|-------------------|
+| Jogadores | GET/POST/PUT/DELETE | `/jogadores` |
+| Quadras   | GET/POST/PUT/DELETE | `/quadras`   |
+| Reservas  | GET/POST/PUT/DELETE | `/reservas`  |
