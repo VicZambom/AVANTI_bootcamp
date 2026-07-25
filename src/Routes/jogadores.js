@@ -5,61 +5,154 @@ const router = express.Router();
 
 // Listar todos os jogadores
 router.get("/", async (req, res) => {
-  const jogadores = await prisma.jogador.findMany();
-  res.json(jogadores);
+  try {
+    const jogadores = await prisma.jogador.findMany();
+    return res.status(200).json(jogadores);
+  } catch (error) {
+    console.error("Erro ao buscar jogadores:", error);
+
+    return res.status(500).json({
+      mensagem: "Erro interno ao buscar os jogadores.",
+    });
+  }
 });
 
 // Buscar jogador por ID
 router.get("/:id", async (req, res) => {
-  const jogador = await prisma.jogador.findUnique({
-    where: { id: Number(req.params.id) }
-  });
+  try {
+    const id = Number(req.params.id);
 
-  if (!jogador) {
-    return res.status(404).json({ mensagem: "Jogador não encontrado" });
+    if (Number.isNaN(id)) {
+      return res.status(400).json({
+        mensagem: "ID inválido.",
+      });
+    }
+
+    const jogador = await prisma.jogador.findUnique({
+      where: { id },
+    });
+
+    if (!jogador) {
+      return res.status(404).json({
+        mensagem: "Jogador não encontrado.",
+      });
+    }
+
+    return res.status(200).json(jogador);
+  } catch (error) {
+    console.error("Erro ao buscar jogador:", error);
+
+    return res.status(500).json({
+      mensagem: "Erro interno ao buscar o jogador.",
+    });
   }
-
-  res.json(jogador);
 });
 
 // Criar jogador
 router.post("/", async (req, res) => {
-  const { nome, email, telefone } = req.body;
+  try {
+    const { nome, email, telefone } = req.body;
 
-  const jogador = await prisma.jogador.create({
-    data: {
-      nome,
-      email,
-      telefone
+    if (!nome || !email || !telefone) {
+      return res.status(400).json({
+        mensagem: "Nome, e-mail e telefone são obrigatórios.",
+      });
     }
-  });
 
-  res.status(201).json(jogador);
+    const jogador = await prisma.jogador.create({
+      data: {
+        nome,
+        email,
+        telefone,
+      },
+    });
+
+    return res.status(201).json(jogador);
+  } catch (error) {
+    console.error("Erro ao cadastrar jogador:", error);
+
+    return res.status(500).json({
+      mensagem: "Erro interno ao cadastrar o jogador.",
+    });
+  }
 });
 
 // Atualizar jogador
 router.put("/:id", async (req, res) => {
-  const { nome, email, telefone } = req.body;
+  try {
+    const id = Number(req.params.id);
+    const { nome, email, telefone } = req.body;
 
-  const jogador = await prisma.jogador.update({
-    where: { id: Number(req.params.id) },
-    data: {
-      nome,
-      email,
-      telefone
+    if (Number.isNaN(id)) {
+      return res.status(400).json({
+        mensagem: "ID inválido.",
+      });
     }
-  });
 
-  res.json(jogador);
+    const jogadorExistente = await prisma.jogador.findUnique({
+      where: { id },
+    });
+
+    if (!jogadorExistente) {
+      return res.status(404).json({
+        mensagem: "Jogador não encontrado.",
+      });
+    }
+
+    const jogador = await prisma.jogador.update({
+      where: { id },
+      data: {
+        nome,
+        email,
+        telefone,
+      },
+    });
+
+    return res.status(200).json(jogador);
+  } catch (error) {
+    console.error("Erro ao atualizar jogador:", error);
+
+    return res.status(500).json({
+      mensagem: "Erro interno ao atualizar o jogador.",
+    });
+  }
 });
 
 // Excluir jogador
 router.delete("/:id", async (req, res) => {
-  await prisma.jogador.delete({
-    where: { id: Number(req.params.id) }
-  });
+  try {
+    const id = Number(req.params.id);
 
-  res.json({ mensagem: "Jogador excluído com sucesso!" });
+    if (Number.isNaN(id)) {
+      return res.status(400).json({
+        mensagem: "ID inválido.",
+      });
+    }
+
+    const jogadorExistente = await prisma.jogador.findUnique({
+      where: { id },
+    });
+
+    if (!jogadorExistente) {
+      return res.status(404).json({
+        mensagem: "Jogador não encontrado.",
+      });
+    }
+
+    await prisma.jogador.delete({
+      where: { id },
+    });
+
+    return res.status(200).json({
+      mensagem: "Jogador excluído com sucesso.",
+    });
+  } catch (error) {
+    console.error("Erro ao excluir jogador:", error);
+
+    return res.status(500).json({
+      mensagem: "Erro interno ao excluir o jogador.",
+    });
+  }
 });
 
 export default router;
