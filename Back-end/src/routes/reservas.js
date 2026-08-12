@@ -1,12 +1,13 @@
 import express from "express";
 import { reservaController } from "../controllers/reservaController.js";
+import { autenticar } from "../middlewares/auth.js";
 
 const router = express.Router();
 
 router.get("/", reservaController.listar);
 router.get("/:id", reservaController.buscarPorId);
 router.post("/", reservaController.criar);
-router.put("/:id", reservaController.atualizar);
-router.delete("/:id", reservaController.cancelar);
+router.put("/:id", autenticar, reservaController.atualizar);
+router.delete("/:id", autenticar, reservaController.cancelar);
 
 export default router;

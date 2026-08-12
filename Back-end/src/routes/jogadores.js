@@ -1,12 +1,13 @@
 import express from "express";
 import { jogadorController } from "../controllers/jogadorController.js";
+import { autenticar } from "../middlewares/auth.js";
 
 const router = express.Router();
 
 router.get("/", jogadorController.listar);
 router.get("/:id", jogadorController.buscarPorId);
-router.post("/", jogadorController.criar);
-router.put("/:id", jogadorController.atualizar);
-router.delete("/:id", jogadorController.excluir);
+router.post("/", autenticar, jogadorController.criar);
+router.put("/:id", autenticar, jogadorController.atualizar);
+router.delete("/:id", autenticar, jogadorController.excluir);
 
 export default router;
