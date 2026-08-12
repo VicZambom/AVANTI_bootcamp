@@ -1,7 +1,7 @@
 
 import express from "express";
-import jogadoresRoutes from "./Routes/jogadores.js";
-import quadrasRoutes from "./Routes/quadra.js";
+import jogadoresRoutes from "./routes/jogadores.js";
+import quadrasRoutes from "./routes/quadra.js";
 import reservasRoutes from "./routes/reservas.js";
 
 const app = express();
