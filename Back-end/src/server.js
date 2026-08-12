@@ -3,9 +3,10 @@ import express from "express";
 import jogadoresRoutes from "./routes/jogadores.js";
 import quadrasRoutes from "./routes/quadra.js";
 import reservasRoutes from "./routes/reservas.js";
+import cors from "cors";
 
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 
 app.use("/jogadores", jogadoresRoutes);
