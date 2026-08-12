@@ -2,8 +2,11 @@ import { prisma } from "../prisma.js";
 
 export const reservaService = {
   async listarTodas() {
-    return prisma.reserva.findMany();
-  },
+    return prisma.reserva.findMany({
+        where: {
+          status: "ATIVA"},
+        });
+      },
 
   async buscarPorId(id) {
     return prisma.reserva.findUnique({ where: { id } });
@@ -13,6 +16,7 @@ export const reservaService = {
     return prisma.reserva.findFirst({
       where: {
         ...(ignorarId ? { id: { not: ignorarId } } : {}),
+        status: "ATIVA",
         quadraId: Number(quadraId),
         inicio: { lt: fimData },
         fim: { gt: inicioData },
@@ -47,7 +51,10 @@ export const reservaService = {
     });
   },
 
-  async excluir(id) {
-    return prisma.reserva.delete({ where: { id } });
+  async cancelar(id) {
+    return prisma.reserva.update({
+      where: { id },
+      data: { status: "CANCELADA" },
+    });
   },
 };

@@ -92,7 +92,7 @@ export const reservaController = {
     }
   },
 
-  async excluir(req, res) {
+  async cancelar(req, res) {
     try {
       const id = Number(req.params.id);
 
@@ -105,11 +105,11 @@ export const reservaController = {
         return res.status(404).json({ mensagem: "Reserva não encontrada." });
       }
 
-      await reservaService.excluir(id);
-      return res.status(200).json({ mensagem: "Reserva excluída com sucesso." });
+      await reservaService.cancelar(id);
+      return res.status(200).json({ mensagem: "Reserva cancelada com sucesso." });
     } catch (error) {
-      console.error("Erro ao excluir reserva:", error);
-      return res.status(500).json({ mensagem: "Erro interno ao excluir a reserva." });
+      console.error("Erro ao cancelar reserva:", error);
+      return res.status(500).json({ mensagem: "Erro interno ao cancelar a reserva." });
     }
   },
 };
