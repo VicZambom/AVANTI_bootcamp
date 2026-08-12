@@ -1,15 +1,41 @@
 import { prisma } from "../prisma.js";
 
 export const reservaService = {
-  async listarTodas() {
+  async listarTodas(filtros = {}) {
+    const { quadraId, data } = filtros;
+
+    const where = { status: "ATIVA" };
+
+    if (quadraId) {
+      where.quadraId = Number(quadraId);
+    }
+
+    if (data) {
+      const inicioDia = new Date(`${data}T00:00:00.000Z`);
+      const fimDia = new Date(inicioDia);
+      fimDia.setUTCDate(fimDia.getUTCDate() + 1);
+
+      where.inicio = { gte: inicioDia, lt: fimDia };
+    }
+
     return prisma.reserva.findMany({
-        where: {
-          status: "ATIVA"},
-        });
+      where,
+      include: {
+        jogador: true,
+        quadra: true,
       },
+      orderBy: { inicio: "asc" },
+    });
+  },
 
   async buscarPorId(id) {
-    return prisma.reserva.findUnique({ where: { id } });
+    return prisma.reserva.findUnique({ 
+      where: { id },
+      include: {
+        jogador: true,
+        quadra: true,
+      }, 
+    });
   },
 
   async buscarConflito({ quadraId, inicioData, fimData, ignorarId }) {

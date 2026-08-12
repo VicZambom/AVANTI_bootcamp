@@ -3,7 +3,17 @@ import { reservaService } from "../services/reservaService.js";
 export const reservaController = {
   async listar(req, res) {
     try {
-      const reservas = await reservaService.listarTodas();
+      const { quadraId, data } = req.query;
+
+      if (quadraId && Number.isNaN(Number(quadraId))) {
+        return res.status(400).json({ mensagem: "quadraId inválido." });
+      }
+
+      if (data && Number.isNaN(new Date(`${data}T00:00:00.000Z`).getTime())) {
+        return res.status(400).json({ mensagem: "Data inválida. Use o formato AAAA-MM-DD." });
+      }
+
+      const reservas = await reservaService.listarTodas({ quadraId, data });
       return res.status(200).json(reservas);
     } catch (error) {
       console.error("Erro ao buscar reservas:", error);
