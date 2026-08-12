@@ -1,5 +1,6 @@
 
 import express from "express";
+import authRoutes from "./routes/auth.js";
 import jogadoresRoutes from "./routes/jogadores.js";
 import quadrasRoutes from "./routes/quadra.js";
 import reservasRoutes from "./routes/reservas.js";
@@ -9,6 +10,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use("/auth", authRoutes);
 app.use("/jogadores", jogadoresRoutes);
 app.use("/quadras", quadrasRoutes);
 app.use("/reservas", reservasRoutes);
