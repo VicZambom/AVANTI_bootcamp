@@ -43,6 +43,18 @@ export const reservaController = {
       const inicioData = new Date(inicio);
       const fimData = new Date(fim);
 
+      if (Number.isNaN(inicioData.getTime()) || Number.isNaN(fimData.getTime())) {
+        return res.status(400).json({
+          mensagem: "Data ou horário inválido. Use o formato ISO (ex: 2026-08-20T15:00:00.000Z).",
+        });
+      }
+
+      if (fimData <= inicioData) {
+        return res.status(400).json({
+          mensagem: "O horário de fim deve ser posterior ao horário de início.",
+        });
+      }
+
       const conflito = await reservaService.buscarConflito({ quadraId, inicioData, fimData });
 
       if (conflito) {
@@ -77,6 +89,18 @@ export const reservaController = {
 
       const inicioData = new Date(inicio);
       const fimData = new Date(fim);
+
+      if (Number.isNaN(inicioData.getTime()) || Number.isNaN(fimData.getTime())) {
+        return res.status(400).json({
+          mensagem: "Data ou horário inválido. Use o formato ISO (ex: 2026-08-20T15:00:00.000Z).",
+        });
+      }
+
+      if (fimData <= inicioData) {
+        return res.status(400).json({
+          mensagem: "O horário de fim deve ser posterior ao horário de início.",
+        });
+      }
 
       const conflito = await reservaService.buscarConflito({ quadraId, inicioData, fimData, ignorarId: id });
 
