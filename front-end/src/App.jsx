@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/login/login";
 import Agenda from "./pages/agenda/Agenda";
+import Jogadores from "./pages/jogadores/Jogadores";
 import RotaPrivada from "./components/RotaPrivada";
 
 export default function App() {
@@ -13,6 +14,14 @@ export default function App() {
           element={
             <RotaPrivada>
               <Agenda />
+            </RotaPrivada>
+          }
+        />
+        <Route
+          path="/jogadores"
+          element={
+            <RotaPrivada>
+              <Jogadores />
             </RotaPrivada>
           }
         />
