@@ -60,6 +60,41 @@ export const reservaService = {
     });
   },
 
+  async criarSolicitacao({ nome, email, telefone, quadraId, inicioData, fimData, observacao }) {
+    return prisma.$transaction(async (tx) => {
+
+      const jogador = await tx.jogador.upsert({
+      where: { email },
+      update: { nome, telefone },
+      create: { nome, email, telefone },
+    });
+
+      const conflito = await tx.reserva.findFirst({
+        where: {
+          status: "ATIVA",
+          quadraId: Number(quadraId),
+          inicio: { lt: fimData },
+          fim: { gt: inicioData },
+        },
+      });
+
+      if (conflito) {
+        throw new Error("CONFLITO");
+      }
+
+      return tx.reserva.create({
+        data: {
+          jogadorId: jogador.id,
+          quadraId: Number(quadraId),
+          inicio: inicioData,
+          fim: fimData,
+          observacao: observacao || null,
+        },
+        include: { jogador: true, quadra: true },
+      });
+    });
+  },
+
   async atualizar(id, dados) {
     const { jogadorId, quadraId, inicio, fim, observacao } = dados;
     return prisma.reserva.update({
@@ -81,3 +116,4 @@ export const reservaService = {
     });
   },
 };
+
