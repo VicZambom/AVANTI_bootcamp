@@ -154,3 +154,9 @@ Use as credenciais criadas pelo seed (exibidas no terminal ao rodá-lo).
 
 ---
 
+## 👥 Equipe
+
+| Integrante | Contribuição |
+|---|---|
+| Talita | Dev Fullstack |
+| Victoria | Dev Fullstack |
