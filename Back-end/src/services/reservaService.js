@@ -2,9 +2,10 @@ import { prisma } from "../prisma.js";
 
 export const reservaService = {
   async listarTodas(filtros = {}) {
-    const { quadraId, data } = filtros;
+    const { quadraId, data, incluirCanceladas } = filtros;
 
-    const where = { status: "ATIVA" };
+    const where = {};
+    if (!incluirCanceladas) where.status = "ATIVA";
 
     if (quadraId) {
       where.quadraId = Number(quadraId);
@@ -14,16 +15,12 @@ export const reservaService = {
       const inicioDia = new Date(`${data}T00:00:00.000Z`);
       const fimDia = new Date(inicioDia);
       fimDia.setUTCDate(fimDia.getUTCDate() + 1);
-
       where.inicio = { gte: inicioDia, lt: fimDia };
     }
 
     return prisma.reserva.findMany({
       where,
-      include: {
-        jogador: true,
-        quadra: true,
-      },
+      include: { jogador: true, quadra: true },
       orderBy: { inicio: "asc" },
     });
   },
