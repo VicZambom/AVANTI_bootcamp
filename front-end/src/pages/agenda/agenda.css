@@ -1,0 +1,390 @@
+.agenda {
+  --terra: #9f4f26;
+  --lima: #b6dc41;
+  --oliva: #9cbb70;
+  --oliva-escuro: #6d9b3e;
+  --oliva-fundo: #eff2e8;
+  --oliva-celula: #f8faf5;
+  --creme: #faf4f0;
+  --cartao: #fffdfc;
+  --tinta: #2b1a12;
+  --tinta-suave: #8a7367;
+  --linha: #ecdcd3;
+  --linha-verde: #dfe6d3;
+
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 76px);
+  width: 100%;
+  padding: 24px 40px 28px;
+  color: var(--tinta);
+}
+
+.agenda__topo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.agenda__titulo {
+  margin: 0;
+  font-family: "Archivo", sans-serif;
+  font-weight: 800;
+  font-size: 32px;
+  letter-spacing: -0.025em;
+}
+
+.agenda__sub {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--tinta-suave);
+}
+
+.agenda__novo {
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--oliva-escuro);
+  font-family: "Archivo", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.16s ease;
+}
+
+.agenda__novo:hover { background: #5b8433; }
+
+/* ---------- busca ---------- */
+
+.agenda__busca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  margin-bottom: 16px;
+  border: 1.5px solid var(--linha);
+  border-radius: 10px;
+  background: var(--creme);
+  color: var(--terra);
+  transition: border-color 0.15s ease;
+}
+
+.agenda__busca:focus-within { border-color: var(--oliva-escuro); }
+
+.agenda__busca input {
+  flex: 1;
+  padding: 13px 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--tinta);
+}
+
+.agenda__busca input:focus { outline: none; }
+.agenda__busca input::placeholder { color: #c0a596; }
+
+.agenda__erro {
+  margin: 0 0 14px;
+  padding: 12px 15px;
+  border-left: 3px solid #b3341f;
+  border-radius: 6px;
+  background: #fbe9e4;
+  font-size: 14px;
+  color: #8d2a18;
+}
+
+.agenda__vazio {
+  padding: 40px 0;
+  color: var(--tinta-suave);
+}
+
+.agenda__grade {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 18px;
+}
+
+/* ---------- calendário ---------- */
+
+.calendario {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border: 1px solid var(--linha-verde);
+  border-radius: 14px;
+  background: var(--oliva-fundo);
+}
+
+.calendario__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.calendario__mes {
+  margin: 0;
+  font-family: "Archivo", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.calendario__nav { display: flex; gap: 6px; }
+
+.calendario__nav button {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--linha-verde);
+  border-radius: 7px;
+  background: #fff;
+  font-size: 17px;
+  line-height: 1;
+  color: var(--tinta);
+  cursor: pointer;
+}
+
+.calendario__nav button:hover { background: var(--oliva-celula); }
+
+.calendario__semana {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 6px;
+  padding: 10px 0;
+  border-radius: 8px;
+  background: var(--oliva);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+}
+
+.calendario__dias {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: minmax(0, 1fr);
+  gap: 5px;
+}
+
+.dia {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 4px;
+  min-height: 0;
+  padding: 8px;
+  border: 1px solid var(--linha-verde);
+  border-radius: 8px;
+  background: var(--oliva-celula);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.14s ease, background 0.14s ease;
+}
+
+.dia:hover { border-color: var(--oliva-escuro); }
+
+.dia--fora {
+  border: 0;
+  background: #e4e9dc;
+  cursor: default;
+}
+
+.dia--ativo {
+  border-color: var(--oliva-escuro);
+  background: #fff;
+  box-shadow: inset 0 0 0 2px var(--oliva-escuro);
+}
+
+.dia__numero {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--tinta);
+}
+
+.dia__barras {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.dia__barra {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--oliva-escuro);
+}
+
+.dia__barra--cancelada { background: #e8c2a8; }
+
+/* ---------- painel do dia ---------- */
+
+.painel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--linha-verde);
+  border-radius: 14px;
+  background: var(--oliva-fundo);
+}
+
+.painel__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: var(--oliva);
+  font-family: "Archivo", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.painel__topo button {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 7px;
+  background: none;
+  font-size: 19px;
+  line-height: 1;
+  color: #fff;
+  cursor: pointer;
+}
+
+.painel__topo button:hover { background: rgba(255, 255, 255, 0.25); }
+
+.painel__corpo {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.painel__vazio {
+  margin: 0;
+  padding: 16px 6px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--tinta-suave);
+}
+
+.painel__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.reserva {
+  padding: 13px;
+  border: 1px solid var(--linha-verde);
+  border-left: 3px solid var(--oliva-escuro);
+  border-radius: 9px;
+  background: #fff;
+}
+
+.reserva__linha {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 3px;
+}
+
+.reserva__jogador {
+  font-family: "Archivo", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.reserva__hora {
+  font-family: "Archivo", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--tinta);
+}
+
+.reserva__contato { font-size: 12px; color: var(--tinta-suave); }
+.reserva__quadra { font-size: 12px; color: var(--tinta-suave); }
+
+.reserva__obs {
+  margin: 7px 0 0;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--tinta-suave);
+}
+
+.reserva__acoes {
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.reserva__acoes button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--oliva-escuro);
+  cursor: pointer;
+}
+
+.reserva__acoes button:hover { text-decoration: underline; }
+.reserva__cancelar { color: #b3341f !important; }
+
+/* cancelada */
+
+.reserva--cancelada {
+  border-left-color: #e8c2a8;
+  background: #faf6f3;
+  opacity: 0.78;
+}
+
+.reserva--cancelada .reserva__jogador,
+.reserva--cancelada .reserva__hora {
+  text-decoration: line-through;
+  color: var(--tinta-suave);
+}
+
+.reserva__selo {
+  display: inline-block;
+  margin-top: 9px;
+  padding: 3px 9px;
+  border-radius: 5px;
+  background: #f2e0d4;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9a6a48;
+}
+
+/* ---------- responsivo ---------- */
+
+@media (max-width: 1000px) {
+  .agenda { height: auto; padding: 20px 20px 40px; }
+  .agenda__grade { grid-template-columns: 1fr; }
+  .calendario__dias { grid-auto-rows: minmax(64px, auto); }
+  .painel { max-height: 520px; }
+}
+
+@media (max-width: 560px) {
+  .agenda { padding: 18px 14px 36px; }
+  .agenda__titulo { font-size: 26px; }
+  .agenda__novo { width: 100%; }
+  .calendario { padding: 12px; }
+  .calendario__semana { font-size: 9px; letter-spacing: 0.04em; }
+  .dia { padding: 5px; border-radius: 6px; }
+  .dia__numero { font-size: 12px; }
+}
