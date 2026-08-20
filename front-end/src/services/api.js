@@ -47,6 +47,9 @@ export const listarJogadores = () => requisicao("/jogadores");
 export const criarReserva = (dados) =>
   requisicao("/reservas", { method: "POST", body: JSON.stringify(dados) });
 
+export const solicitarReserva = (dados) =>
+  requisicao("/reservas/solicitacao", { method: "POST", body: JSON.stringify(dados) });
+
 export const atualizarReserva = (id, dados) =>
   requisicao(`/reservas/${id}`, { method: "PUT", body: JSON.stringify(dados) });
 

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/login/login";
 import Agenda from "./pages/agenda/Agenda";
 import Jogadores from "./pages/jogadores/Jogadores";
+import Landing from "./pages/landing/landing";
 import RotaPrivada from "./components/RotaPrivada";
 
 export default function App() {
@@ -25,7 +26,8 @@ export default function App() {
             </RotaPrivada>
           }
         />
-        <Route path="*" element={<Navigate to="/agenda" replace />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
