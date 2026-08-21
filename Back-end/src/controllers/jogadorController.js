@@ -78,14 +78,19 @@ export const jogadorController = {
         return res.status(400).json({ mensagem: "ID inválido." });
       }
 
-      const jogadorExistente = await jogadorService.buscarPorId(id);
-      if (!jogadorExistente) {
+      const existente = await jogadorService.buscarPorId(id);
+      if (!existente) {
         return res.status(404).json({ mensagem: "Jogador não encontrado." });
       }
 
       await jogadorService.excluir(id);
       return res.status(200).json({ mensagem: "Jogador excluído com sucesso." });
     } catch (error) {
+      if (error.code === "P2003") {
+        return res.status(409).json({
+          mensagem: "Não é possível excluir: este jogador tem reservas registradas.",
+        });
+      }
       console.error("Erro ao excluir jogador:", error);
       return res.status(500).json({ mensagem: "Erro interno ao excluir o jogador." });
     }

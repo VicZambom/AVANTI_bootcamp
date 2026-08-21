@@ -2,7 +2,12 @@ import { prisma } from "../prisma.js";
 
 export const jogadorService = {
   async listarTodos() {
-    return prisma.jogador.findMany();
+    return prisma.jogador.findMany({
+      include: {
+        reservas: { select: { status: true, fim: true } },
+      },
+      orderBy: { nome: "asc" },
+    });
   },
 
   async buscarPorId(id) {
