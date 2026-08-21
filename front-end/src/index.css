@@ -1,3 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  --terra: #9f4f26;
+  --terra-escuro: #7c3a17;
+  --lima: #b6dc41;
+  --oliva: #9cbb70;
+  --oliva-escuro: #6d9b3e;
+  --oliva-fundo: #eff2e8;
+  --oliva-celula: #f8faf5;
+  --creme: #faf4f0;
+  --creme-fundo: #f3e7e0;
+  --cartao: #fffdfc;
+  --tinta: #2b1a12;
+  --tinta-suave: #8a7367;
+  --linha: #ead9cf;
+  --linha-verde: #dfe6d3;
+  --erro: #b3341f;
+  --erro-fundo: #fbe9e4;
+  --erro-texto: #8d2a18;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -12,7 +34,7 @@ body,
 
 body {
   font-family: "Inter", system-ui, sans-serif;
-  background: #faf4f0;
-  color: #2b1a12;
+  background: var(--creme);
+  color: var(--tinta);
   -webkit-font-smoothing: antialiased;
 }

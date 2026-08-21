@@ -55,3 +55,21 @@ export const atualizarReserva = (id, dados) =>
 
 export const cancelarReserva = (id) =>
   requisicao(`/reservas/${id}`, { method: "DELETE" });
+
+export const criarJogador = (dados) =>
+  requisicao("/jogadores", { method: "POST", body: JSON.stringify(dados) });
+
+export const atualizarJogador = (id, dados) =>
+  requisicao(`/jogadores/${id}`, { method: "PUT", body: JSON.stringify(dados) });
+
+export const excluirJogador = (id) =>
+  requisicao(`/jogadores/${id}`, { method: "DELETE" });
+
+export const criarQuadra = (dados) =>
+  requisicao("/quadras", { method: "POST", body: JSON.stringify(dados) });
+
+export const atualizarQuadra = (id, dados) =>
+  requisicao(`/quadras/${id}`, { method: "PUT", body: JSON.stringify(dados) });
+
+export const excluirQuadra = (id) =>
+  requisicao(`/quadras/${id}`, { method: "DELETE" });
