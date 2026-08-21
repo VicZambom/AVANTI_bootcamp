@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Search } from "lucide-react";
-import Header from "../../components/header/Header";
-import ModalReserva from "../../components/modalReserva/modalReserva";
+import Header from "../../components/Header/Header";
+import ModalReserva from "../../components/ModalReserva/ModalReserva";
 import {
   listarReservas,
   listarQuadras,

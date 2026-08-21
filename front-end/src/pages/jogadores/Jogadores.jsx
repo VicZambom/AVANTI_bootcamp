@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Search, Pencil, Trash2 } from 'lucide-react';
-import Header from "../../components/header/Header";
+import Header from "../../components/Header/Header";
 import {
   listarJogadores,
   criarJogador,
