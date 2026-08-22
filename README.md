@@ -11,7 +11,7 @@ Projeto do bootcamp **Desenvolvimento Full Stack Básico — DFS-2026.2 (Atlânt
 
 | | |
 |---|---|
-| **Site** | ⚠️ https://SUA-URL.netlify.app |
+| **Site** | https://ruffo.netlify.app/|
 | **API** | https://avanti-bootcamp.onrender.com |
 
 > ⏱️ A API está hospedada em plano gratuito e hiberna após 15 minutos sem uso.
